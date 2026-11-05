@@ -1,0 +1,724 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mi página personal</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --header-bg: linear-gradient(135deg,#667eea,#764ba2);
+    --footer-bg: linear-gradient(135deg,#7028e4,#e040fb);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Lato', sans-serif;
+    margin: 20px;
+    background: linear-gradient(135deg,#e0eafc,#cfdef3);
+    min-height: 100vh;
+    color: #222;
+    letter-spacing: .2px;
+}
+
+h1,h2 {
+    font-family: 'Playfair Display',serif;
+}
+
+/* BOTONES DE COLOR */
+
+.mini-btn {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    padding: 0;
+    border: 1px solid white;
+    border-radius: 4px;
+    background: linear-gradient(135deg,#00c6ff,#7f00ff);
+    cursor: pointer;
+    opacity: .9;
+    z-index: 6;
+}
+
+.mini-btn:hover {
+    opacity: 1;
+}
+
+.header .mini-btn,
+.pie .mini-btn {
+    top: 10px;
+    left: 10px;
+}
+
+.contenedor .mini-btn {
+    top: 10px;
+    right: 10px;
+}
+
+/* MENÚ DE COLORES */
+
+.mini-pop {
+    display: none;
+    position: absolute;
+    top: 30px;
+    padding: 10px;
+    background: white;
+    border-radius: 9px;
+    box-shadow: 0 5px 18px #0003;
+    z-index: 25;
+    color: #222;
+    width: 155px;
+}
+
+.mini-pop.show {
+    display: block;
+}
+
+.header .mini-pop,
+.pie .mini-pop {
+    left: 10px;
+}
+
+.contenedor .mini-pop {
+    right: 10px;
+}
+
+.mini-pop .titulo {
+    display: block;
+    font-size: 11px;
+    margin-bottom: 7px;
+    font-weight: 700;
+    color: #222;
+}
+
+.mini-pop input[type="color"] {
+    width: 100%;
+    height: 25px;
+    margin-bottom: 8px;
+    cursor: pointer;
+}
+
+.mini-swatches {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 5px;
+}
+
+.mini-swatch {
+    height: 25px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* ENCABEZADO */
+
+.header {
+    background: var(--header-bg);
+    color: white;
+    padding: 28px;
+    text-align: center;
+    border-radius: 14px;
+    position: relative;
+    box-shadow: 0 5px 18px #0003;
+}
+
+.header h1 {
+    margin: 0 0 7px;
+    font-size: 34px;
+}
+
+.header p {
+    margin: 0;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+/* PERSONALIZAR */
+
+.personalizar {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 11px;
+    padding: 5px 9px;
+    color: #222;
+    background: #ffffffb0;
+    border: 1px solid white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.panel {
+    display: none;
+    position: absolute;
+    top: 40px;
+    right: 10px;
+    width: 200px;
+    padding: 13px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px #0003;
+    z-index: 20;
+    color: #222;
+    text-align: left;
+}
+
+.panel.abierto {
+    display: block;
+}
+
+.panel .titulo {
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.panel label {
+    display: block;
+    font-size: 11px;
+    margin: 10px 0 5px;
+}
+
+.panel input[type="color"] {
+    width: 100%;
+    height: 28px;
+    cursor: pointer;
+}
+
+.panel .muestras {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 7px;
+}
+
+.panel .muestra {
+    height: 38px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.panel .reset {
+    width: 100%;
+    margin-top: 12px;
+    padding: 7px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    background: #eee;
+}
+
+/* MENÚ PRINCIPAL */
+
+.menu {
+    background: linear-gradient(135deg,#141e30,#243b55,#0072ff);
+    padding: 16px;
+    text-align: center;
+    margin-top: 15px;
+    border-radius: 12px;
+    box-shadow: 0 4px 14px #0003;
+}
+
+.menu a {
+    color: white;
+    text-decoration: none;
+    margin: 15px;
+    display: inline-block;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-size: 13px;
+    transition: .3s;
+}
+
+.menu a:hover {
+    color: #75eaff;
+    transform: translateY(-2px);
+}
+
+/* CONTENEDORES */
+
+.contenido {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 17px;
+    margin-top: 17px;
+}
+
+.contenedor {
+    padding: 20px;
+    flex: 1 1 40%;
+    border-radius: 13px;
+    position: relative;
+    box-shadow: 0 5px 18px #0003;
+    transition: .3s;
+}
+
+.contenedor:hover {
+    transform: translateY(-3px);
+}
+
+/* DEGRADADOS DIFERENTES */
+
+#biografia {
+    background: linear-gradient(135deg,#667eea,#764ba2,#8e54e9);
+    color: white;
+}
+
+#fotos {
+    background: linear-gradient(135deg,#00c6ff,#0072ff,#48c6ef);
+    color: white;
+}
+
+#musica {
+    background: linear-gradient(135deg,#11998e,#38ef7d,#a8e063);
+    color: #102b20;
+}
+
+#video {
+    background: linear-gradient(135deg,#ff8008,#ff512f,#f09819);
+    color: white;
+}
+
+#biografia h2,
+#fotos h2,
+#video h2 {
+    color: white;
+}
+
+#musica h2 {
+    color: #102b20;
+}
+
+#biografia .box-content p,
+#fotos .box-content p,
+#video .box-content p {
+    color: white;
+}
+
+#musica .box-content p {
+    color: #102b20;
+}
+
+.contenedor h2 {
+    margin: 0;
+    padding-right: 28px;
+    text-shadow: none;
+    cursor: pointer;
+    user-select: none;
+}
+
+.box-content {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height .45s ease,opacity .3s ease;
+}
+
+.contenedor.open .box-content {
+    max-height: 1200px;
+    opacity: 1;
+    margin-top: 12px;
+}
+
+.contenedor.open {
+    min-height: 160px;
+}
+
+.box-content p {
+    margin: 8px 0;
+    line-height: 1.7;
+    text-align: justify;
+}
+
+img {
+    max-width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px #0002;
+}
+
+audio,video {
+    max-width: 100%;
+    border-radius: 8px;
+}
+
+/* VIDEO RESPONSIVE */
+
+.yt-video {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px #0002;
+}
+
+.yt-video video {
+    width: 100%;
+    display: block;
+}
+
+/* PIE DE PÁGINA */
+
+.pie {
+    background: var(--footer-bg);
+    color: white;
+    padding: 20px;
+    text-align: center;
+    margin-top: 17px;
+    border-radius: 12px;
+    letter-spacing: 1px;
+    box-shadow: 0 5px 18px #0003;
+    position: relative;
+}
+
+.pie p {
+    margin: 5px;
+}
+
+.redes {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 22px;
+    margin: 18px 0;
+    flex-wrap: wrap;
+}
+
+.redes img {
+    width: 35px;
+    height: 35px;
+    box-shadow: none;
+    transition: transform .2s;
+}
+
+.redes img:hover {
+    transform: scale(1.2);
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:650px) {
+    body {
+        margin: 10px;
+    }
+
+    .contenido {
+        flex-direction: column;
+    }
+
+    .menu a {
+        margin: 8px;
+    }
+
+    .header h1 {
+        font-size: 26px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ENCABEZADO -->
+
+<header class="header" id="header">
+
+    <button class="mini-btn" onclick="togglePop(event,this)" aria-label="Cambiar degradado"></button>
+
+    <div class="mini-pop">
+        <span class="titulo">Degradado del encabezado</span>
+        <div class="mini-swatches">
+            <button class="mini-swatch" style="background:linear-gradient(135deg,#667eea,#764ba2)" onclick="setHeaderGrad('linear-gradient(135deg,#667eea,#764ba2)')"></button>
+            <button class="mini-swatch" style="background:linear-gradient(135deg,#00c6ff,#0072ff)" onclick="setHeaderGrad('linear-gradient(135deg,#00c6ff,#0072ff)')"></button>
+            <button class="mini-swatch" style="background:linear-gradient(135deg,#11998e,#38ef7d)" onclick="setHeaderGrad('linear-gradient(135deg,#11998e,#38ef7d)')"></button>
+            <button class="mini-swatch" style="background:linear-gradient(135deg,#ff8008,#ff512f)" onclick="setHeaderGrad('linear-gradient(135deg,#ff8008,#ff512f)')"></button>
+        </div>
+    </div>
+
+    <h1>Axel Fernando</h1>
+    <p>Mi página personal</p>
+
+    <button class="personalizar" id="btnPersonalizar" onclick="abrirPanel(event)" aria-expanded="false">
+        Personalizar
+    </button>
+
+    <div class="panel" id="panel">
+        <span class="titulo">Personalizar página</span>
+
+        <label>Color de fondo</label>
+        <input type="color" value="#e0eafc" oninput="aplicarFondo(this.value)">
+
+        <label>Degradados de fondo</label>
+        <div class="muestras">
+            <button class="muestra" style="background:linear-gradient(135deg,#e0eafc,#cfdef3)" onclick="aplicarFondo('linear-gradient(135deg,#e0eafc,#cfdef3)')"></button>
+            <button class="muestra" style="background:linear-gradient(135deg,#cfd9df,#e2ebf0)" onclick="aplicarFondo('linear-gradient(135deg,#cfd9df,#e2ebf0)')"></button>
+            <button class="muestra" style="background:linear-gradient(135deg,#d9a7c7,#fffcdc)" onclick="aplicarFondo('linear-gradient(135deg,#d9a7c7,#fffcdc)')"></button>
+            <button class="muestra" style="background:linear-gradient(135deg,#c2e9fb,#a1c4fd)" onclick="aplicarFondo('linear-gradient(135deg,#c2e9fb,#a1c4fd)')"></button>
+        </div>
+
+        <button class="reset" onclick="resetTodo()">Restablecer todo</button>
+    </div>
+
+</header>
+
+<!-- MENÚ -->
+
+<nav class="menu">
+    <a href="#biografia" onclick="openBox(event,'biografia')">Biografía</a>
+    <a href="#fotos" onclick="openBox(event,'fotos')">Fotos</a>
+    <a href="#musica" onclick="openBox(event,'musica')">Música</a>
+    <a href="#video" onclick="openBox(event,'video')">Video</a>
+</nav>
+
+<!-- CONTENIDO -->
+
+<div class="contenido">
+
+    <!-- BIOGRAFÍA -->
+
+    <div class="contenedor" id="biografia">
+
+        <button class="mini-btn" onclick="togglePop(event,this)" aria-label="Cambiar color de biografía"></button>
+
+        <div class="mini-pop">
+            <span class="titulo">Color de Biografía</span>
+            <input type="color" value="#667eea" oninput="setBoxColor(this,'biografia')">
+            <div class="mini-swatches">
+                <button class="mini-swatch" style="background:linear-gradient(135deg,#667eea,#764ba2)" onclick="setBoxGrad('biografia','linear-gradient(135deg,#667eea,#764ba2)')"></button>
+                <button class="mini-swatch" style="background:linear-gradient(135deg,#00c6ff,#0072ff)" onclick="setBoxGrad('biografia','linear-gradient(135deg,#00c6ff,#0072ff)')"></button>
+                <button class="mini-swatch" style="background:linear-gradient(135deg,#11998e,#38ef7d)" onclick="setBoxGrad('biografia','linear-gradient(135deg,#11998e,#38ef7d)')"></button>
+                <button class="mini-swatch" style="background:linear-gradient(135deg,#ff8008,#ff512f)" onclick="setBoxGrad('biografia','linear-gradient(135deg,#ff8008,#ff512f)')"></button>
+            </div>
+        </div>
+
+        <h2 onclick="toggleBox('biografia')">Biografía</h2>
+
+        <div class="box-content">
+            <p>Mi nombre es Axel Fernando Córdova García. Nací en la provincia de Los Ríos, Ecuador, y soy originario de la ciudad de Babahoyo, del sector Febres Cordero. Realicé mis estudios secundarios en la Unidad Educativa Babahoyo. Actualmente soy estudiante de la Universidad Técnica de Babahoyo, en la carrera de Sistemas de Información, donde curso el tercer semestre.</p>
+
+            <p>Me considero una persona interesada en aprender cosas nuevas y adquirir conocimientos que me ayuden a crecer tanto personal como profesionalmente. Me gusta la tecnología, la informática y la programación, especialmente desarrollar pequeños proyectos. También disfruto escuchar todo tipo de música, ya que me ayuda a relajarme y realizar mis actividades. Mi objetivo es continuar preparándome académicamente, superar nuevos desafíos y convertirme en un buen profesional.</p>
+        </div>
+    </div>
+
+    <!-- FOTOS -->
+
+    <div class="contenedor" id="fotos">
+
+        <button class="mini-btn" onclick="togglePop(event,this)" aria-label="Cambiar color de fotos"></button>
+
+        <div class="mini-pop">
+            <span class="titulo">Color de Fotos</span>
+            <input type="color" value="#00c6ff" oninput="setBoxColor(this,'fotos')">
+            <div class="mini-swatches">
+                <button class="mini-swatch" style="background:linear-gradient(135deg,#667eea,#764ba2)" onclick="setBoxGrad('fotos','linear-gradient(135deg,#667eea,#764ba2)')"></button>
+                <button class="mini-swatch" style="background:linear-gradient(135deg,#00c6ff,#0072ff)" onclick="setBoxGrad('fotos','linear-gradient(135deg,#00c6ff,#0072ff)')"></button>
+                <button class="mini-swatch" style="background:linear-gradient(135deg,#11998e,#38ef7d)" onclick="setBoxGrad('fotos','linear-gradient(135deg,#11998e,#38ef7d)')"></button>
+                <button class="mini-swatch" style="background:linear-gradient(135deg,#ff8008,#ff512f)" onclick="setBoxGrad('fotos','linear-gradient(135deg,#ff8008,#ff512f)')"></button>
+            </div>
+        </div>
+
+        <h2 onclick="toggleBox('fotos')">Fotos</h2>
+
+        <div class="box-content">
+            <img src="WhatsApp Image 2026-10-29 at 8.50.38 PM.png" alt="Mi fotografía" width="180">
+            <p>24-10 octubre</p>
+        </div>
+    </div>
+
+    <!-- MÚSICA -->
+
+    <div class="contenedor" id="musica">
+
+        <button class="mini-btn" onclick="togglePop(event,this)" aria-label="Cambiar color de música"></button>
+
+        <div class="mini-pop">
+            <span class="titulo">Color de Música</span>
+            <input type="color" value="#11998e" oninput="setBoxColor(this,'musica')">
+            <div class="mini-swatches">
+                <button class="mini-swatch" style="background:linear-gradient(135deg,#667eea,#764ba2)" onclick="setBoxGrad('musica','linear-gradient(135deg,#667eea,#764ba2)')"></button>
+                <button class="mini-swatch" style="background:linear-gradient(135deg,#00c6ff,#0072ff)" onclick="setBoxGrad('musica','linear-gradient(135deg,#00c6ff,#0072ff)')"></button>
+                <button class="mini-swatch" style="background:linear-gradient(135deg,#11998e,#38ef7d)" onclick="setBoxGrad('musica','linear-gradient(135deg,#11998e,#38ef7d)')"></button>
+                <button class="mini-swatch" style="background:linear-gradient(135deg,#ff8008,#ff512f)" onclick="setBoxGrad('musica','linear-gradient(135deg,#ff8008,#ff512f)')"></button>
+            </div>
+        </div>
+
+        <h2 onclick="toggleBox('musica')">Música</h2>
+
+        <div class="box-content">
+            <p><strong>Constancia</strong></p>
+
+            <div class="yt-video">
+                <video controls>
+                    <source src="modo hustle.mp4" type="video/mp4">
+                    Tu navegador no puede reproducir este video.
+                </video>
+            </div>
+        </div>
+    </div>
+
+    <!-- VIDEO -->
+
+    <div class="contenedor" id="video">
+
+        <button class="mini-btn" onclick="togglePop(event,this)" aria-label="Cambiar color de video"></button>
+
+        <div class="mini-pop">
+            <span class="titulo">Color de Video</span>
+            <input type="color" value="#ff8008" oninput="setBoxColor(this,'video')">
+            <div class="mini-swatches">
+                <button class="mini-swatch" style="background:linear-gradient(135deg,#667eea,#764ba2)" onclick="setBoxGrad('video','linear-gradient(135deg,#667eea,#764ba2)')"></button>
+                <button class="mini-swatch" style="background:linear-gradient(135deg,#00c6ff,#0072ff)" onclick="setBoxGrad('video','linear-gradient(135deg,#00c6ff,#0072ff)')"></button>
+                <button class="mini-swatch" style="background:linear-gradient(135deg,#11998e,#38ef7d)" onclick="setBoxGrad('video','linear-gradient(135deg,#11998e,#38ef7d)')"></button>
+                <button class="mini-swatch" style="background:linear-gradient(135deg,#ff8008,#ff512f)" onclick="setBoxGrad('video','linear-gradient(135deg,#ff8008,#ff512f)')"></button>
+            </div>
+        </div>
+
+        <h2 onclick="toggleBox('video')">Video</h2>
+
+        <div class="box-content">
+            <p>Mi video personal.</p>
+
+            <video width="250%" controls>
+                <source src="videoia.mp4" type="video/mp4">
+            </video>
+        </div>
+    </div>
+</div>
+<!-- PIE DE PÁGINA -->
+<footer class="pie" id="footer">
+    <button class="mini-btn" onclick="togglePop(event,this)" aria-label="Cambiar degradado del pie"></button>
+    <div class="mini-pop">
+        <span class="titulo">Degradado del pie</span>
+        <div class="mini-swatches">
+            <button class="mini-swatch" style="background:linear-gradient(135deg,#7028e4,#e040fb)" onclick="setFooterGrad('linear-gradient(135deg,#7028e4,#e040fb)')"></button>
+            <button class="mini-swatch" style="background:linear-gradient(135deg,#667eea,#764ba2)" onclick="setFooterGrad('linear-gradient(135deg,#667eea,#764ba2)')"></button>
+            <button class="mini-swatch" style="background:linear-gradient(135deg,#00c6ff,#0072ff)" onclick="setFooterGrad('linear-gradient(135deg,#00c6ff,#0072ff)')"></button>
+            <button class="mini-swatch" style="background:linear-gradient(135deg,#ff8008,#ff512f)" onclick="setFooterGrad('linear-gradient(135deg,#ff8008,#ff512f)')"></button>
+        </div>
+    </div>
+    <p>2026 · Axel Fernando</p>
+    <div class="redes">
+        <a href="https://www.facebook.com/axel.fernando.878818" target="_blank" rel="noopener noreferrer" title="Facebook">
+            <img src="https://cdn.simpleicons.org/facebook/1877F2" alt="Facebook">
+        </a>
+        <a href="https://www.instagram.com/af.axelfernando/" target="_blank" rel="noopener noreferrer" title="Instagram">
+            <img src="https://cdn.simpleicons.org/instagram/E4405F" alt="Instagram">
+        </a>
+        <a href="https://www.tiktok.com/@afaxelfernando" target="_blank" rel="noopener noreferrer" title="TikTok">
+            <img src="https://cdn.simpleicons.org/tiktok/000000" alt="TikTok">
+        </a>
+        <a href="https://t.me/Afaxelfernando" target="_blank" rel="noopener noreferrer" title="Telegram">
+            <img src="https://cdn.simpleicons.org/telegram/26A5E4" alt="Telegram">
+        </a>
+    </div>
+</footer>
+<script>
+function $(id) {
+    return document.getElementById(id);
+}
+/* CERRAR MENÚS */
+function cerrarPops() {
+    document.querySelectorAll(".mini-pop.show, .panel.abierto")
+    .forEach(p => p.classList.remove("show","abierto"));
+    $("btnPersonalizar").setAttribute("aria-expanded","false");
+}
+document.addEventListener("click",function(e) {
+    if (
+        e.target.closest(".mini-pop") ||
+        e.target.closest(".panel") ||
+        e.target.closest(".mini-btn") ||
+        e.target.closest(".personalizar")
+    ) return;
+    cerrarPops();
+});
+document.addEventListener("keydown",function(e) {
+    if(e.key === "Escape") cerrarPops();
+});
+/* ABRIR SELECTOR DE COLOR */
+function togglePop(event,btn) {
+    event.stopPropagation();
+    const pop = btn.nextElementSibling;
+    const estabaAbierto = pop.classList.contains("show");
+    cerrarPops();
+    if(!estabaAbierto) pop.classList.add("show");
+}
+/* PANEL PERSONALIZAR */
+function abrirPanel(event) {
+    event.stopPropagation();
+    const panel = $("panel");
+    const abierto = panel.classList.toggle("abierto");
+    $("btnPersonalizar").setAttribute(
+        "aria-expanded",
+        abierto ? "true" : "false"
+    );
+}
+/* FONDO */
+function aplicarFondo(valor) {
+    document.body.style.background = valor;
+}
+/* ENCABEZADO */
+function setHeaderGrad(grad) {
+    $("header").style.background = grad;
+    cerrarPops();
+}
+/* PIE */
+function setFooterGrad(grad) {
+    $("footer").style.background = grad;
+    cerrarPops();
+}
+/* CONTENEDORES */
+function setBoxColor(input,id) {
+    $(id).style.background = input.value;
+}
+function setBoxGrad(id,grad) {
+    $(id).style.background = grad;
+    cerrarPops();
+}
+/* ABRIR Y CERRAR SECCIONES */
+function toggleBox(id) {
+    $(id).classList.toggle("open");
+}
+function openBox(event,id) {
+    event.preventDefault();
+    cerrarPops();
+    const caja = $(id);
+    caja.classList.add("open");
+    setTimeout(function() {
+        caja.scrollIntoView({
+            behavior:"smooth",
+            block:"start"
+        });
+    },60);
+}
+/* RESTABLECER COLORES */
+function resetTodo() {
+    document.body.style.background = "";
+    $("header").style.background = "";
+    $("footer").style.background = "";
+    const colores = {
+        biografia:"linear-gradient(135deg,#667eea,#764ba2,#8e54e9)",
+        fotos:"linear-gradient(135deg,#00c6ff,#0072ff,#48c6ef)",
+        musica:"linear-gradient(135deg,#11998e,#38ef7d,#a8e063)",
+        video:"linear-gradient(135deg,#ff8008,#ff512f,#f09819)"
+    };
+    Object.keys(colores).forEach(id => {
+        $(id).style.background = colores[id];
+    });
+    cerrarPops();
+}
+</script>
+</body>
+</html>
